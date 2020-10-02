@@ -380,6 +380,8 @@ def dep_compact_report(parser_true, d_preds, dep_metrics, doc_names,
             assert labelset_pred.issubset(labelset_true)
         except AssertionError:
             print(parser_name)
+            print('T', sorted(x for x in labelset_true if x is not None))
+            print('P', sorted(x for x in labelset_pred if x is not None))
             print('T & P', sorted(labelset_true.intersection(labelset_pred)))
             print('T - P', sorted(labelset_true - labelset_pred))
             print('P - T', sorted(labelset_pred - labelset_true))

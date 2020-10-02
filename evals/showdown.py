@@ -47,6 +47,7 @@ from ours import (load_deptrees_from_attelo_output,
                         load_attelo_ctrees,
                         load_attelo_dtrees)
 from surdeanu import load_surdeanu_ctrees, load_surdeanu_dtrees
+from rs22 import load_rs22_ctrees, load_rs22_dtrees  # 2020-10-02 WIP
 # 2017-12-12 nuc_clf WIP
 from train_nuc_classifier import RightBinaryNuclearityClassifier
 from train_rel_relabeller import RelationRelabeller
@@ -142,6 +143,8 @@ SURDEANU_LOG_FILE = os.path.join(REPLICATION_DIR, 'surdeanu/output/log')
 # Wang, Li and Wang at ACL 2017
 WLW17_OUT_DIR = os.path.join(REPLICATION_DIR,
                              'wang/rst-dt/RSTtrees-WSJ-main-1.0/TEST')
+# (Alexeeva et al. forthcoming)
+RS22_LOG_FILE = os.path.join(REPLICATION_DIR, 'rs22/trees_rs22.txt')
 
 # level of detail for parseval
 STRINGENT = False
@@ -163,6 +166,7 @@ AUTHORS = [
     'BCS17_cross',
     'SHV15_D',
     'WLW17',  # Wang, Li and Wang, ACL17
+    'RS22',  # Alexeeva et al forthcoming?
     'li_sujian',
     'ours-chain', 'ours-tree', 'ours-tree-su'
 ]
@@ -616,6 +620,17 @@ def main():
             d_preds.append(
                 ('SHV15_D', load_surdeanu_dtrees(
                     SURDEANU_LOG_FILE, REL_CONV, nary_enc='chain',
+                    ctree_pred=ctree_pred))
+            )
+        # WIP 2020-10-02
+        if author_pred == 'RS22':
+            ctree_pred = load_rs22_ctrees(RS22_LOG_FILE, REL_CONV)
+            c_preds.append(
+                ('RS22', ctree_pred)
+            )
+            d_preds.append(
+                ('RS22', load_rs22_dtrees(
+                    RS22_LOG_FILE, REL_CONV, nary_enc='chain',
                     ctree_pred=ctree_pred))
             )
 
